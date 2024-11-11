@@ -1,13 +1,25 @@
 using Blazorproyect.Data;
+using Blazorproyect.DataAccess;
+using Business;
+using DataAccess.Servicios;
+using DataAccess.Servicios.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<InventaryContext>(options =>
+       options.UseMySQL(builder.Configuration.GetConnectionString("InventaryDatabase")));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<B_Product>();
+builder.Services.AddScoped<B_Category>();
 
 var app = builder.Build();
 
