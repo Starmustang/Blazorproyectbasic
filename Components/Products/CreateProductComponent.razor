@@ -2,6 +2,7 @@
 @using Business
 @inject B_Product bproduct;
 @inject B_Category bcategory;
+@inject NavigationManager NavManager;
 
 <div>
     <EditForm Model="oProduct">
@@ -42,10 +43,16 @@
     protected override async Task OnInitializedAsync()
     {
         categories = await bcategory.GetCategoryListAsync();
+        if (categories.Any())
+        {
+            oProduct.categoryId = categories.First().categoryId;
+        }
+
     }
 
     private async void SaveProduct()
     {
-        await bproduct.CreateProductAsync(oProduct);        
+        await bproduct.CreateProductAsync(oProduct);
+        NavManager.NavigateTo("product/list");
     }
 }
