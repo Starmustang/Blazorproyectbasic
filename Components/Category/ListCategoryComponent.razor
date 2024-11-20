@@ -1,0 +1,45 @@
+﻿@using Entity
+@using Business
+@inject B_Category bcategory
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>Id Categoria</th>
+            <th>Nombre categoria</th>            
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in tempCategories)
+        {
+            <tr>
+                <td>@category.categoryId</td>
+                <td>@category.categoryName</td>                
+                <td><a href="/category/update/@category.categoryId">Actualizar</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@message
+
+@code {
+
+    List<CategoryEntity> categories = new List<CategoryEntity>();
+    List<CategoryEntity> tempCategories = new List<CategoryEntity>();
+
+    string message;
+
+    protected override async Task OnInitializedAsync()
+    {       
+        categories = await bcategory.GetCategoryListAsync();
+        tempCategories = categories;
+    }
+
+    private void CategoryChanged(ChangeEventArgs e)
+    {
+        //message = e.Value.ToString();
+        //tempProducts = products.Where(c => c.categoryId == e.Value.ToString()).ToList();
+    }
+}

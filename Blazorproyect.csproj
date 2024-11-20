@@ -6,6 +6,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Pages\NewFolder1\**" />
+    <Compile Remove="Pages\NewFolder2\**" />
+    <Compile Remove="Pages\NewFolder3\**" />
+    <Compile Remove="Pages\NewFolder\**" />
+    <Content Remove="Pages\NewFolder1\**" />
+    <Content Remove="Pages\NewFolder2\**" />
+    <Content Remove="Pages\NewFolder3\**" />
+    <Content Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder1\**" />
+    <EmbeddedResource Remove="Pages\NewFolder2\**" />
+    <EmbeddedResource Remove="Pages\NewFolder3\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
+    <None Remove="Pages\NewFolder1\**" />
+    <None Remove="Pages\NewFolder2\**" />
+    <None Remove="Pages\NewFolder3\**" />
+    <None Remove="Pages\NewFolder\**" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.35" />
 	</ItemGroup>
@@ -17,6 +36,12 @@
 
 	<ItemGroup>
 	  <Folder Include="Components\Ejercicios\" />
+	  <Folder Include="Components\Bodega\" />
+	  <Folder Include="Components\Almacen\" />
+	  <Folder Include="Components\IngresosySalidas\" />
+	  <Folder Include="Pages\Almacen\" />
+	  <Folder Include="Pages\Bodega\" />
+	  <Folder Include="Pages\IngresosySalidas\" />
 	</ItemGroup>
 
 </Project>
