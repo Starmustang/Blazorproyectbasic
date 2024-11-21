@@ -37,9 +37,7 @@
 	<ItemGroup>
 	  <Folder Include="Components\Ejercicios\" />
 	  <Folder Include="Components\Bodega\" />
-	  <Folder Include="Components\Almacen\" />
 	  <Folder Include="Components\IngresosySalidas\" />
-	  <Folder Include="Pages\Almacen\" />
 	  <Folder Include="Pages\Bodega\" />
 	  <Folder Include="Pages\IngresosySalidas\" />
 	</ItemGroup>

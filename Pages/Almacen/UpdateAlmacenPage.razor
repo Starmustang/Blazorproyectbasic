@@ -1,0 +1,13 @@
+﻿@page "/almacen/update/{IdAlmacen}"
+
+<Blazorproyect.Components.Almacen.UpdateAlmacenComponent IdAlmacen="@IdAlmacen" />
+
+@code {
+	[Parameter]
+	public string IdAlmacen { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		IdAlmacen = IdAlmacen;
+	}
+}

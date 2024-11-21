@@ -1,5 +1,68 @@
-﻿<h3>ListAlmacenComponent</h3>
+﻿@using Entity
+@using Business
+@inject B_Product bproduct
+@inject B_Almacen balmacen
+
+
+@* <hr />
+<select class="form-control" onchange="@CategoryChanged">
+    <option value="">Seleccione categoria...</option>
+    @foreach (var category in categories)
+    {
+        <option value="@category.categoryId">@category.categoryName</option>
+    }
+</select> *@
+<hr />
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>AlmacenId</th>
+            <th>Nombre de almacen</th>
+            <th>Direccion de almacen</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var almacen in tempalmacenes)
+        {
+            <tr>
+                <td>@almacen.AlmacenId</td>
+                <td>@almacen.AlmacenName</td>
+                <td>@almacen.AlmacenDireccion</td>
+                @* <td><a href="/product/update/@almacen.ProductId">Actualizar</a></td> *@
+            </tr>
+        }
+    </tbody>
+</table>
+
+@message
 
 @code {
+    List<ProductEntity> products = new List<ProductEntity>();
+    List<ProductEntity> tempProducts = new List<ProductEntity>();
+    List<CategoryEntity> categories = new List<CategoryEntity>();
 
+    List<AlmacenEntity> almacenes = new List<AlmacenEntity>();
+    List<AlmacenEntity> tempalmacenes = new List<AlmacenEntity>();
+
+
+    string message;
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        almacenes = await balmacen.GetAlmacenListAsync();
+        tempalmacenes = almacenes;
+
+        // products = await bproduct.GetProductListAsync();
+        // tempProducts = products;
+        //categories = await bcategory.GetCategoryListAsync();
+    }
+
+    private void CategoryChanged(ChangeEventArgs e)
+    {
+        //message = e.Value.ToString();
+        tempProducts = products.Where(c => c.categoryId == e.Value.ToString()).ToList();
+    }
 }
