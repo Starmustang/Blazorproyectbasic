@@ -16,10 +16,17 @@ builder.Services.AddDbContext<InventaryContext>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+//servicios con interfaz
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IAlmacenService, AlmacenService>();
+
+//servicios de negocio
 builder.Services.AddScoped<B_Product>();
 builder.Services.AddScoped<B_Category>();
+builder.Services.AddScoped<B_Almacen>();
+//builder.Services.AddScoped<B_IngresosySalidas>();
 
 var app = builder.Build();
 
