@@ -21,11 +21,13 @@ builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IAlmacenService, AlmacenService>();
+builder.Services.AddScoped<IBodegaService, BodegaService>();
 
 //servicios de negocio
 builder.Services.AddScoped<B_Product>();
 builder.Services.AddScoped<B_Category>();
 builder.Services.AddScoped<B_Almacen>();
+builder.Services.AddScoped<B_Bodega>();
 //builder.Services.AddScoped<B_IngresosySalidas>();
 
 var app = builder.Build();

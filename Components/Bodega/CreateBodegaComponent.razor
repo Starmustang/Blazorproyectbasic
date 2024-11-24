@@ -1,0 +1,75 @@
+﻿@using Entity
+@using Business
+@inject B_Bodega bbodega
+@inject B_Product bproduct
+@inject B_Almacen balmacen
+@inject NavigationManager NavManager
+
+<div>
+	<EditForm Model="obodega">
+		<div class="form-group">
+			<label>Id de bodega</label>
+			<InputText @bind-Value="obodega.BodegaId" />
+		</div>
+
+		<div class="form-group">
+			<label>Cantidad de bodegas</label>
+			<InputNumber @bind-Value="obodega.CantidadParcial" />
+		</div>
+
+		<div class="form-group">
+			<label>Ultima actualizacion</label>
+			<InputDate @bind-Value="obodega.UltimaActualizacion" />
+		</div>
+
+		<div class="form-group">
+			<label>Producto</label>
+			<InputSelect @bind-Value="obodega.ProductId" >
+				@foreach(var product in products)
+				{
+					<option value="@product.ProductId">@product.ProductName</option>
+				}
+			</InputSelect>
+		</div>
+
+		<div>
+			<label>Almacen</label>
+			<InputSelect @bind-Value="obodega.AlmacenId">
+				@foreach (var almacen in almacenes)
+				{
+					<option value="@almacen.AlmacenId">@almacen.AlmacenName</option>
+				}
+			</InputSelect>
+		</div>
+
+		<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;"/>
+	</EditForm>
+
+</div>
+
+@code {
+	BodegaEntity obodega = new BodegaEntity();
+	List<ProductEntity> products = new List<ProductEntity>();
+	List<AlmacenEntity> almacenes = new List<AlmacenEntity>();
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		products = await bproduct.GetProductListAsync();
+		if (products.Any())
+		{
+			obodega.ProductId = products.First().ProductId;
+		}
+		almacenes = await balmacen.GetAlmacenListAsync();
+		if (almacenes.Any())
+		{
+			obodega.AlmacenId = almacenes.First().AlmacenId;
+		}
+	}
+
+	private async void SaveBodega()
+	{
+		await bbodega.CreateBodegaAsync(obodega);
+		NavManager.NavigateTo("/bodega/list");
+	}
+}

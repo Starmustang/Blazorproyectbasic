@@ -1,0 +1,43 @@
+﻿@using Business
+@using Entity
+@inject B_Bodega bbodega
+
+@if (!tempBodega.Any())
+{
+	<p>No hay registros disponibles</p>
+}
+else {
+	<table class="table table-hover table-bordered">
+		<thead>
+		<th>BodegaId</th>
+		<th>Ultima actualizacion</th>
+		<th>Cantidad parcial</th>
+		<th>ProductId</th>
+		</thead>
+
+		<tbody>
+
+			@foreach (var bodega in tempBodega)
+			{
+				<tr>
+					<td>@bodega.BodegaId</td>
+					<td>@bodega.UltimaActualizacion</td>
+					<td>@bodega.CantidadParcial</td>
+					<td>@bodega.ProductId</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+}
+
+@code {
+	List<BodegaEntity> tempBodega = new List<BodegaEntity>();
+	List<BodegaEntity> bodegas = new List<BodegaEntity>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		bodegas = await bbodega.GetBodegaListAsync();
+		tempBodega = bodegas;
+	}
+}
