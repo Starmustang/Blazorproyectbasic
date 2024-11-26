@@ -13,6 +13,7 @@ else {
 		<th>Ultima actualizacion</th>
 		<th>Cantidad parcial</th>
 		<th>ProductId</th>
+		<th>AlmacenId</th>
 		</thead>
 
 		<tbody>
@@ -24,6 +25,8 @@ else {
 					<td>@bodega.UltimaActualizacion</td>
 					<td>@bodega.CantidadParcial</td>
 					<td>@bodega.ProductId</td>
+					<td>@bodega.AlmacenId</td>
+					<td><a href="/bodega/update/@bodega.BodegaId">actualizar</a></td>
 				</tr>
 			}
 

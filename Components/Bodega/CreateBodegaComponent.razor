@@ -25,7 +25,7 @@
 		<div class="form-group">
 			<label>Producto</label>
 			<InputSelect @bind-Value="obodega.ProductId" >
-				@foreach(var product in products)
+				@foreach(var product in products)				
 				{
 					<option value="@product.ProductId">@product.ProductName</option>
 				}

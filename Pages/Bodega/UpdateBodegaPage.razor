@@ -1,0 +1,13 @@
+﻿@page "/bodega/update/{IdBodega}"
+
+<UpdateBodegaComponent IdBodega="@IdBodega"/>
+
+@code {
+	[Parameter]
+	public string IdBodega { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		IdBodega = IdBodega;
+	}
+}
