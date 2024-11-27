@@ -1,0 +1,59 @@
+﻿@using Entity
+@using Business
+@inject B_Category bcategory
+@inject B_IngresosySalidas bingresosysalidas
+
+@if (!tempIngresosySalidas.Any())
+{
+    <p>No hay Ingresos ni salidas registrados</p>
+}
+else {
+
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Id Ingresos y salidas</th>
+                <th>Fecha de ingreso</th>
+                <th>Cantidad</th>
+                <th>Es entrada</th>
+                <th>Id de bodega</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ingresosySalidas in tempIngresosySalidas)
+            {
+                <tr>
+                    <td>@ingresosySalidas.IngresoId</td>
+                    <td>@ingresosySalidas.IngresoFecha</td>
+                    <td>@ingresosySalidas.Cantidad</td>
+                    <td>@ingresosySalidas.Isinput</td>
+                    <td>@ingresosySalidas.BodegaId</td>
+                    @* <td><a href="/category/update/@category.categoryId">Actualizar</a></td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+
+    List<CategoryEntity> categories = new List<CategoryEntity>();
+    List<CategoryEntity> tempCategories = new List<CategoryEntity>();
+    List<IngresosySalidasEntity> tempIngresosySalidas = new List<IngresosySalidasEntity>();    
+
+    protected override async Task OnInitializedAsync()
+    {
+        // categories = await bcategory.GetCategoryListAsync();
+        // tempCategories = categories;
+
+        tempIngresosySalidas = await bingresosysalidas.GetIngresosySalidasAsync();
+    }
+
+    private void CategoryChanged(ChangeEventArgs e)
+    {
+        //message = e.Value.ToString();
+        //tempProducts = products.Where(c => c.categoryId == e.Value.ToString()).ToList();
+    }
+}
