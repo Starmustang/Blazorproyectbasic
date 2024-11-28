@@ -10,7 +10,7 @@
 <EditForm Model="oingresosysalidas">
 	<div class="form-group">
 		<label>Id de Ingreso y salida</label>
-		<InputText class="form-control" @bind-Value="oingresosysalidas.IngresoId" />
+		<InputText class="form-control" @bind-Value="oingresosysalidas.IngresoId" readonly />
 	</div>
 
 	<div class="form-group">
@@ -20,7 +20,7 @@
 
 	<div class="form-group">
 		<label>Cantidad</label>
-		<InputNumber class="form-control"  @bind-Value="oingresosysalidas.Cantidad" />
+		<InputNumber class="form-control" @bind-Value="oingresosysalidas.Cantidad" />
 	</div>
 
 	<div class="form-group">
@@ -30,24 +30,24 @@
 
 	<div class="form-group">
 		<label>Bodega</label>
-		<InputSelect  class="form-control" @bind-Value="oingresosysalidas.BodegaId">
+		<InputSelect class="form-control" @bind-Value="oingresosysalidas.BodegaId">
 			@foreach (var bodega in tempbodega)
 			{
 				<option value="@bodega.BodegaId">@bodega.BodegaId</option>
 			}
 		</InputSelect>
-	</div>	
+	</div>
 
 	<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;" class="form-control" />
 </EditForm>
 
 @code {
-	BodegaEntity obodega = new BodegaEntity();
+	[Parameter]
+	public string Idingresos { get; set; }
+
 	IngresosySalidasEntity oingresosysalidas = new IngresosySalidasEntity();
 	List<BodegaEntity> tempbodega = new List<BodegaEntity>();
 
-	List<ProductEntity> products = new List<ProductEntity>();
-	List<AlmacenEntity> almacenes = new List<AlmacenEntity>();
 
 
 	protected override async Task OnInitializedAsync()
@@ -66,15 +66,17 @@
 		tempbodega = await bbodega.GetBodegaListAsync();
 		if (tempbodega.Any())
 		{
-			oingresosysalidas.BodegaId = tempbodega.First().BodegaId; 
+			oingresosysalidas.BodegaId = tempbodega.First().BodegaId;
 		}
+
+		oingresosysalidas = await bingresosysalidas.GetIngresosySalidasByIdAsync(Idingresos);
 
 	}
 
 	private async void SaveBodega()
 	{
 		// await bbodega.CreateBodegaAsync(obodega);
-		await bingresosysalidas.CreateIngresosySalidasAsync(oingresosysalidas);
+		await bingresosysalidas.UpdateIngresosySalidasAsync(oingresosysalidas);
 		NavManager.NavigateTo("/ingresosysalidas/list");
 	}
 }

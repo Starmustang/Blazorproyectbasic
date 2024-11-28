@@ -1,0 +1,12 @@
+﻿@page "/ingresosysalidas/update/{Idingresos}"
+
+<UpdateIngresosySalidasComponent Idingresos="@Idingresos" />
+@code {
+	[Parameter]
+	public string Idingresos { get; set; }
+
+	protected async override Task OnInitializedAsync()
+	{
+		 Idingresos = Idingresos;
+	}
+}

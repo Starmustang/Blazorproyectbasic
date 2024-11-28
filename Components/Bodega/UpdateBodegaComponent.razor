@@ -11,22 +11,22 @@
 <EditForm Model="obodega">
 	<div class="form-group">
 		<label>Id de bodega</label>
-		<InputText @bind-Value="obodega.BodegaId" />
+		<InputText @bind-Value="obodega.BodegaId" readonly class="form-control" />
 	</div>
 
 	<div class="form-group">
 		<label>Cantidad de bodegas</label>
-		<InputNumber @bind-Value="obodega.CantidadParcial" />
+		<InputNumber @bind-Value="obodega.CantidadParcial" class="form-control" />
 	</div>
 
 	<div class="form-group">
 		<label>Ultima actualizacion</label>
-		<InputDate @bind-Value="obodega.UltimaActualizacion" />
+		<InputDate @bind-Value="obodega.UltimaActualizacion" class="form-control" />
 	</div>
 
 	<div class="form-group">
 		<label>Producto</label>
-		<InputSelect @bind-Value="obodega.ProductId">
+		<InputSelect @bind-Value="obodega.ProductId" class="form-control">
 			@foreach (var product in products)
 			{
 				<option value="@product.ProductId">@product.ProductName</option>
@@ -36,7 +36,7 @@
 
 	<div>
 		<label>Almacen</label>
-		<InputSelect @bind-Value="obodega.AlmacenId">
+		<InputSelect @bind-Value="obodega.AlmacenId" class="form-control">
 			@foreach (var almacen in almacenes)
 			{
 				<option value="@almacen.AlmacenId">@almacen.AlmacenName</option>
@@ -44,7 +44,7 @@
 		</InputSelect>
 	</div>
 
-	<input type="button" value="Actualizar bodega" style="margin-top: 10px;" @onclick=UpdateCategory />
+	<input type="button" value="Actualizar bodega" style="margin-top: 10px;" @onclick=UpdateCategory class="form-control" />
 
 </EditForm>
 

@@ -22,13 +22,15 @@
             <InputText @bind-Value="oalmacen.AlmacenDireccion" class="form-control" />
         </div>
 
-        <input type="button" value="Agregar Producto" @onclick="SaveProduct" />
+        <input type="button" value="Agregar Producto" @onclick="SaveProduct" class="form-control" style="margin-top: 10px;" />
     </EditForm>
 </div>
 
 @code {
     CategoryEntity ocategories = new CategoryEntity();
     AlmacenEntity oalmacen = new AlmacenEntity();
+
+    
 
     private async void SaveProduct()
     {

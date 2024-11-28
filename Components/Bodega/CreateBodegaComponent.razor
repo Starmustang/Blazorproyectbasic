@@ -9,17 +9,17 @@
 	<EditForm Model="obodega">
 		<div class="form-group">
 			<label>Id de bodega</label>
-			<InputText @bind-Value="obodega.BodegaId" />
+			<InputText @bind-Value="obodega.BodegaId" class="form-control" />
 		</div>
 
 		<div class="form-group">
 			<label>Cantidad de bodegas</label>
-			<InputNumber @bind-Value="obodega.CantidadParcial" />
+			<InputNumber @bind-Value="obodega.CantidadParcial" class="form-control" />
 		</div>
 
 		<div class="form-group">
 			<label>Ultima actualizacion</label>
-			<InputDate @bind-Value="obodega.UltimaActualizacion" />
+			<InputDate @bind-Value="obodega.UltimaActualizacion" class="form-control" disabled />
 		</div>
 
 		<div class="form-group">
@@ -34,7 +34,7 @@
 
 		<div>
 			<label>Almacen</label>
-			<InputSelect @bind-Value="obodega.AlmacenId">
+			<InputSelect class="form-control" @bind-Value="obodega.AlmacenId">
 				@foreach (var almacen in almacenes)
 				{
 					<option value="@almacen.AlmacenId">@almacen.AlmacenName</option>
@@ -42,13 +42,14 @@
 			</InputSelect>
 		</div>
 
-		<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;"/>
+		<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;" class="form-control" />
 	</EditForm>
 
 </div>
 
 @code {
 	BodegaEntity obodega = new BodegaEntity();
+
 	List<ProductEntity> products = new List<ProductEntity>();
 	List<AlmacenEntity> almacenes = new List<AlmacenEntity>();
 
@@ -69,6 +70,8 @@
 
 	private async void SaveBodega()
 	{
+		obodega.UltimaActualizacion = DateTime.Now;
+		obodega.BodegaId = Guid.NewGuid().ToString();
 		await bbodega.CreateBodegaAsync(obodega);
 		NavManager.NavigateTo("/bodega/list");
 	}
