@@ -9,7 +9,7 @@
     <EditForm Model="oalmacen">
         <div class="form-group">
             <label>Id de almacen:</label>
-            <InputText @bind-Value="oalmacen.AlmacenId" class="form-control" />
+            <InputText @bind-Value="oalmacen.AlmacenId" class="form-control" readonly />
         </div>
 
         <div class="form-group">
@@ -34,7 +34,7 @@
 
     private async void SaveProduct()
     {
-
+        oalmacen.AlmacenId = Guid.NewGuid().ToString();
         await balmacen.CreateAlmacenAsync(oalmacen);
         // await bcategory.CreateCategoryAsync(ocategories);
         NavManager.NavigateTo("almacen/list");

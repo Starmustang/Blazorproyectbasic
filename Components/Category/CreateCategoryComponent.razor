@@ -8,7 +8,7 @@
     <EditForm Model="ocategories">
         <div class="form-group">
             <label>Referencia:</label>
-            <InputText @bind-Value="ocategories.categoryId" class="form-control" />
+            <InputText @bind-Value="ocategories.categoryId" class="form-control" readonly />
         </div>
 
         <div class="form-group">
@@ -25,6 +25,7 @@
 
     private async void SaveProduct()
     {
+        ocategories.categoryId = Guid.NewGuid().ToString();
         await bcategory.CreateCategoryAsync(ocategories);
         NavManager.NavigateTo("category/list");
     }

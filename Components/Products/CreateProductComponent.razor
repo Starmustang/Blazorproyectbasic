@@ -52,6 +52,7 @@
 
     private async void SaveProduct()
     {
+        oProduct.ProductId = Guid.NewGuid().ToString();
         await bproduct.CreateProductAsync(oProduct);
         NavManager.NavigateTo("product/list");
     }
