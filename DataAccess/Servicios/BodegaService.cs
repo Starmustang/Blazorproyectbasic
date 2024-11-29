@@ -40,5 +40,7 @@ namespace DataAccess.Servicios
         {
             return await _context.Bodegas.Where(p => p.BodegaId == id).OrderBy(p => p.BodegaId).LastOrDefaultAsync();
         }
+
+        //crear un metodo para ver si la bodega existe
     }
 }
