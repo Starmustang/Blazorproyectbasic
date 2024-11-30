@@ -5,46 +5,49 @@
 @inject B_Almacen balmacen
 @inject NavigationManager NavManager
 
-<div>
-	<EditForm Model="obodega">
-		<div class="form-group">
-			<label>Id de bodega</label>
-			<InputText @bind-Value="obodega.BodegaId" class="form-control" readonly />
-		</div>
 
-		<div class="form-group">
-			<label>Cantidad de bodegas</label>
-			<InputNumber @bind-Value="obodega.CantidadParcial" class="form-control" />
-		</div>
+<EditForm Model="obodega">
+	<div class="form-group">
+		<label>Id de bodega</label>
+		<InputText @bind-Value="obodega.BodegaId" class="form-control" readonly />
+	</div>
 
-		<div class="form-group">
-			<label>Ultima actualizacion</label>
-			<InputDate @bind-Value="obodega.UltimaActualizacion" class="form-control" disabled />
-		</div>
+	<div class="form-group">
+		<label>Cantidad de bodegas</label>
+		<InputNumber @bind-Value="obodega.CantidadParcial" class="form-control" />
+	</div>
 
-		<div class="form-group">
-			<label>Producto</label>
-			<InputSelect @bind-Value="obodega.ProductId" >
-				@foreach(var product in products)				
-				{
-					<option value="@product.ProductId">@product.ProductName</option>
-				}
-			</InputSelect>
-		</div>
+	<div class="form-group">
+		<label>Ultima actualizacion</label>
+		<InputDate @bind-Value="obodega.UltimaActualizacion" class="form-control" disabled />
+	</div>
 
-		<div>
-			<label>Almacen</label>
-			<InputSelect class="form-control" @bind-Value="obodega.AlmacenId">
-				@foreach (var almacen in almacenes)
-				{
-					<option value="@almacen.AlmacenId">@almacen.AlmacenName</option>
-				}
-			</InputSelect>
-		</div>
+	<div class="form-group">
+		<label>Producto</label>
+		<InputSelect class="form-control" @bind-Value="obodega.ProductId">
+			<option value="">Seleccione un producto....</option>
+			@foreach(var product in products)				
+			{
+				<option value="@product.ProductId">@product.ProductName</option>
+			}
+		</InputSelect>
+	</div>
 
-		<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;" class="form-control" />
-	</EditForm>
+	<div>
+		<label>Almacen</label>
+		<InputSelect class="form-control" @bind-Value="obodega.AlmacenId">
+			<option value="">Seleccione un almacen....</option>
+			@foreach (var almacen in almacenes)
+			{
+				<option value="@almacen.AlmacenId">@almacen.AlmacenName</option>
+			}
+		</InputSelect>
+	</div>
 
+	<input type="button" value="Agregar bodega" @onclick=SaveBodega style="margin-top: 10px;" class="form-control" />
+</EditForm>
+<div class="text-center h4 margin-top: 10px">
+	@message
 </div>
 
 @code {
@@ -53,26 +56,29 @@
 	List<ProductEntity> products = new List<ProductEntity>();
 	List<AlmacenEntity> almacenes = new List<AlmacenEntity>();
 
+	string message;
 
 	protected override async Task OnInitializedAsync()
 	{
-		products = await bproduct.GetProductListAsync();
-		if (products.Any())
-		{
-			obodega.ProductId = products.First().ProductId;
-		}
+		products = await bproduct.GetProductListAsync();		
 		almacenes = await balmacen.GetAlmacenListAsync();
-		if (almacenes.Any())
-		{
-			obodega.AlmacenId = almacenes.First().AlmacenId;
-		}
+
 	}
 
 	private async void SaveBodega()
 	{
-		obodega.UltimaActualizacion = DateTime.Now;
-		obodega.BodegaId = Guid.NewGuid().ToString();
-		await bbodega.CreateBodegaAsync(obodega);
-		NavManager.NavigateTo("/bodega/list");
+		obodega.BodegaId = $"{obodega.AlmacenId}-{obodega.ProductId}";
+		if (!bbodega.IsProductInAlmacen(obodega.BodegaId)){
+			obodega.UltimaActualizacion = DateTime.Now;
+
+			message = "Producto registrado con exito";
+			await bbodega.CreateBodegaAsync(obodega);
+			
+			
+		}
+		else {
+			message = "Producto ya registrado";
+		}
+		
 	}
 }

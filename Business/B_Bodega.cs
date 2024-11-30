@@ -36,5 +36,15 @@ namespace Business
         {
             return await _bodegaService.GetBodegaById(id);
         }
+
+        public bool IsProductInAlmacen(string idBodega)
+        {
+            return _bodegaService.IsProductInAlmacen(idBodega);
+        }
+
+        public Task<List<BodegaEntity>> BodegaProductByAlmacen(string idAlmacen)
+        {
+            return _bodegaService.BodegaProductByAlmacen(idAlmacen);
+        }
     }
 }

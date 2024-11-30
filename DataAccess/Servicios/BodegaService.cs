@@ -4,6 +4,7 @@ using DataAccess.Servicios.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,21 @@ namespace DataAccess.Servicios
             return await _context.Bodegas.Where(p => p.BodegaId == id).OrderBy(p => p.BodegaId).LastOrDefaultAsync();
         }
 
-        //crear un metodo para ver si la bodega existe
+        public bool IsProductInAlmacen(string idBodega)
+        {
+          var Product =  _context.Bodegas.ToList()
+                .Where(p => p.BodegaId == idBodega);
+
+            return Product.Any();
+        }
+
+        public async Task<List<BodegaEntity>> BodegaProductByAlmacen(string idAlmacen)
+        {
+            return _context.Bodegas
+                .Include(p => p.Product)
+                .Include(p => p.Almacen)
+                .Where(p => p.AlmacenId == idAlmacen)
+                .ToList();
+        }
     }
 }

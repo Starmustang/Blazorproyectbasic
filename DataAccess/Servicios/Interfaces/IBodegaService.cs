@@ -16,5 +16,9 @@ namespace DataAccess.Servicios.Interfaces
         Task UpdateBodegaAsync(BodegaEntity bodega);
 
         Task<BodegaEntity> GetBodegaById(string id);
+
+        bool IsProductInAlmacen(string idBodega);
+
+        Task<List<BodegaEntity>> BodegaProductByAlmacen(string idAlmacen);
     }
 }
